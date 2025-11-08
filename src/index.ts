@@ -66,8 +66,13 @@ function addEvent(): void {
 addEvent()
 
 function listEvents(arr: Event[]): void {
-  if (arr.length > 0) {
-    console.log(eventsCollection)
+  if (arr.length === 0) {
+    console.log("You haven't added any events yet.")
+    return
   }
+
+  eventsCollection.forEach((event, i) => {
+    console.log(`${i + 1}. ${event.title} - ${event.month}/${event.day}/${event.year}${event.row ? ", Row: " + event.row : ""}${event.seat ? " Seat: " + event.seat : ""}`)
+  })
 }
 listEvents(eventsCollection)

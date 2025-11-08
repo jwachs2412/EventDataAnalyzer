@@ -18,14 +18,20 @@ function addEvent() {
     while (isNaN(year) || year < 1950 || year > new Date().getFullYear()) {
         year = Number(prompt("What year was the event? "));
         if (isNaN(year) || year < 1950 || year > new Date().getFullYear()) {
-            console.log("You must enter a valid year!");
+            console.log("\nYou must enter a valid year!\n");
         }
     }
     while (isNaN(month) || month < 1 || month > 12) {
         month = Number(prompt("What month was the event? "));
+        if (isNaN(month) || month < 1 || month > 12) {
+            console.log("\nYou must enter a valid month!\n");
+        }
     }
     while (isNaN(day) || day < 1 || day > 31) {
         day = Number(prompt("What day was the event? "));
+        if (isNaN(day) || day < 1 || day > 31) {
+            console.log("\nYou must enter a valid day!\n");
+        }
     }
     seat = prompt("What seat were you in (optional)? ");
     row = prompt("What row were you in (optional)? ");
@@ -39,9 +45,13 @@ function addEvent() {
 }
 addEvent();
 function listEvents(arr) {
-    if (arr.length > 0) {
-        console.log(eventsCollection);
+    if (arr.length === 0) {
+        console.log("You haven't added any events yet.");
+        return;
     }
+    eventsCollection.forEach((event, i) => {
+        console.log(`${i + 1}. ${event.title} - ${event.month}/${event.day}/${event.year}${event.row ? ", Row: " + event.row : ""}${event.seat ? " Seat: " + event.seat : ""}`);
+    });
 }
 listEvents(eventsCollection);
 //# sourceMappingURL=index.js.map
