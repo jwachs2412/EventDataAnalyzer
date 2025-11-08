@@ -23,44 +23,52 @@ function addEvent(): void {
   let seat = undefined
   let row = undefined
 
-  while (!type) {
-    type = prompt("Please enter the type of event you attended (concert, festival, or sporting event): ")
-  }
+  const userAddEvent = prompt("Do you want to add an event? (yes or no): ")
 
-  while (!title) {
-    title = prompt("Who did you see or what event were you at? ")
-  }
-
-  while (isNaN(year) || year < 1950 || year > new Date().getFullYear()) {
-    year = Number(prompt("What year was the event? "))
-    if (isNaN(year) || year < 1950 || year > new Date().getFullYear()) {
-      console.log("\nYou must enter a valid year!\n")
+  if (userAddEvent.toLowerCase() === "yes") {
+    while (!type) {
+      type = prompt("Please enter the type of event you attended (concert, festival, or sporting event): ")
     }
-  }
 
-  while (isNaN(month) || month < 1 || month > 12) {
-    month = Number(prompt("What month was the event? "))
-    if (isNaN(month) || month < 1 || month > 12) {
-      console.log("\nYou must enter a valid month!\n")
+    while (!title) {
+      title = prompt("Who did you see or what event were you at? ")
     }
-  }
 
-  while (isNaN(day) || day < 1 || day > 31) {
-    day = Number(prompt("What day was the event? "))
-    if (isNaN(day) || day < 1 || day > 31) {
-      console.log("\nYou must enter a valid day!\n")
+    while (isNaN(year) || year < 1950 || year > new Date().getFullYear()) {
+      year = Number(prompt("What year was the event? "))
+      if (isNaN(year) || year < 1950 || year > new Date().getFullYear()) {
+        console.log("\nYou must enter a valid year!\n")
+      }
     }
+
+    while (isNaN(month) || month < 1 || month > 12) {
+      month = Number(prompt("What month was the event? "))
+      if (isNaN(month) || month < 1 || month > 12) {
+        console.log("\nYou must enter a valid month!\n")
+      }
+    }
+
+    while (isNaN(day) || day < 1 || day > 31) {
+      day = Number(prompt("What day was the event? "))
+      if (isNaN(day) || day < 1 || day > 31) {
+        console.log("\nYou must enter a valid day!\n")
+      }
+    }
+
+    seat = prompt("What seat were you in (optional)? ")
+    row = prompt("What row were you in (optional)? ")
+
+    const newEvent: Event = { type, title, year, month, day }
+    if (seat) newEvent.seat = seat
+    if (row) newEvent.row = row
+
+    eventsCollection.push(newEvent)
+    console.log("Event has been added.\n")
+
+    return addEvent()
+  } else {
+    return console.log("You have chosen not to add anymore events.\n")
   }
-
-  seat = prompt("What seat were you in (optional)? ")
-  row = prompt("What row were you in (optional)? ")
-
-  const newEvent: Event = { type, title, year, month, day }
-  if (seat) newEvent.seat = seat
-  if (row) newEvent.row = row
-
-  eventsCollection.push(newEvent)
-  console.log("Event has been added.\n")
 }
 
 addEvent()
@@ -71,6 +79,7 @@ function listEvents(arr: Event[]): void {
     return
   }
 
+  console.log("\nHere is a list of all the events you've been to: ")
   eventsCollection.forEach((event, i) => {
     console.log(`${i + 1}. ${event.title} - ${event.month}/${event.day}/${event.year}${event.row ? ", Row: " + event.row : ""}${event.seat ? " Seat: " + event.seat : ""}`)
   })
